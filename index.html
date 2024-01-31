@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+</head>
+
+<body>
+
+    <h1>
+        MY FUNNY GAME
+    </h1>
+
+    <div>
+        <button id="setGrid">
+            SET GRID
+        </button>
+
+    </div>
+    <div class="container">
+
+    </div>
+
+
+    <script>
+
+        const container = document.querySelector(".container")
+
+        // generate grid, refactor into function
+
+
+        const generateGrid = (gridWidth) => {
+            // teardown previous grid
+
+            const divRows = document.querySelectorAll('.divRow')
+
+            divRows.forEach((row) => {
+                row.remove()
+            })
+
+            // change container background color to black
+            container.style.backgroundColor = 'black'
+            // create grid of desired dimensions
+            gridWidth = Number(gridWidth)
+            console.log(gridWidth)
+            for (let row = 0; row < gridWidth; row++) {
+
+                const divRow = document.createElement('div')
+                divRow.setAttribute('class', 'divRow')
+                divRow.setAttribute('id', `row${row}`)
+
+                container.appendChild(divRow)
+
+                for (let col = 0; col < gridWidth; col++) {
+                    const divCell = document.createElement('div')
+
+                    divCell.setAttribute('class', 'divCell')
+                    divCell.setAttribute('id', `row${row}col${col}`)
+                    divRow.appendChild(divCell)
+                }
+            }
+
+
+            // assign hover logic
+            const divCells = document.querySelectorAll('.divCell')
+
+            divCells.forEach((cell) => {
+                cell.addEventListener('mouseover', (event) => {
+                    handleHover(event)
+                    console.log('hover')
+                })
+            })
+        }
+
+
+        const handleHover = (event) => {
+            event.target.setAttribute('class', 'divCellHovered')
+            const redRandom = Math.floor(Math.random() * (255 - 0 + 1)) + 0;
+            const greenRandom = Math.floor(Math.random() * (255 - 0 + 1)) + 0;
+            const blueRandom = Math.floor(Math.random() * (255 - 0 + 1)) + 0;
+
+            const rgbValue = 'rgb(' + redRandom + ',' + greenRandom + ',' + blueRandom + ')';
+
+            event.target.style.backgroundColor = rgbValue;
+
+        }
+
+        const gridSetButton = document.querySelector("#setGrid")
+        gridSetButton.addEventListener('click', (event) => {
+            handleGridSet(event)
+        })
+
+        const handleGridSet = (event) => {
+            let gridWidth = window.prompt("Input width for grid!", "FUCK")
+            generateGrid(gridWidth)
+
+        }
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
